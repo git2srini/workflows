@@ -24,7 +24,7 @@ jobs:
 
       # Pulumi Action (includes Pulumi CLI automatically)
       - name: Pulumi Preview
-        uses: pulumi/actions@v5
+      
         with:
           command: preview
           stack-name: dev
