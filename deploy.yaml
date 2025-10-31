@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:  # Allows manual runs from the Actions tab
-
+      
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -17,14 +16,22 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
+
+      - name: Install Pulumi CLI
+        run: curl -fsSL https://get.pulumi.com | bash
+        shell: bash
+
+      - name: Add Pulumi to PATH
+        run: echo "$HOME/.pulumi/bin" >> $GITHUB_PATH
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      # Pulumi Action (includes Pulumi CLI automatically)
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install pulumi pulumi-aws
       - name: Pulumi Preview
-      
+        uses: pulumi/actions@v5
         with:
           command: preview
           stack-name: dev
@@ -34,7 +41,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Pulumi Up (Deploy)
-       
+        uses: pulumi/actions@v5
         with:
           command: up
           stack-name: dev
