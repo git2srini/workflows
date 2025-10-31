@@ -1,10 +1,10 @@
-name: Deploy Pulumi S3 Bucket (Python)
+name: Deploy Pulumi S3 Bucket (Python-srini)
 
 on:
   push:
     branches:
       - main
-      
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
