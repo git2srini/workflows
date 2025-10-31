@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:  # allows manual trigger from Actions tab
+  workflow_dispatch:  # Allows manual runs from the Actions tab
 
 jobs:
   deploy:
@@ -20,10 +20,9 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
-      # Pulumi automatically installs the CLI internally now
+      # Pulumi Action (includes Pulumi CLI automatically)
       - name: Pulumi Preview
         uses: pulumi/actions@v5
         with:
